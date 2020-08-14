@@ -6,17 +6,34 @@ if (env === 'development') {
   dotenv.config({ path: './src/secret/.env' });
 }
 
-const client = new Discord.Client();
+const pre = '!';
 
-client.once('ready', () => {
-  console.log('Ready!');
-});
+const main = async () => {
+  const client = new Discord.Client();
 
-client.on('message', (message) => {
-  if (message.content === '!ping') {
-    // send back "Pong." to the channel the message was sent in
-    message.channel.send('Pong.');
+  client.once('ready', () => {
+        console.log('Ready!');
+  });
+
+  client.on('message', (message) => {
+    if (!message.content.startsWith(pre) || message.author.bot) return;
+
+    const args = message.content.slice(pre.length).trim().split(/ +/);
+    const command = args[0];
+
+    if (message.channel.type === 'dm') {
+      if (command === 'me') {
+        message.channel.send(`Your username: ${message.author.username}\nYour ID: ${message.author.id}`);
+      }
+    }
+  });
+
+  try {
+    await client.login(process.env.DISCORD_TOKEN);
+  } catch (e) {
+    console.error('Bot has failed to connect to discord.');
+    process.exit(1);
   }
-});
+};
 
-client.login(process.env.DISCORD_TOKEN);
+main();
