@@ -1,6 +1,6 @@
 import { setConnection, getConnection } from './connection';
 import ClusterUtil from './cluster';
-import TransactionUtil from '../functions/transaction';
+import TransactionUtil from './transaction';
 import AccountUtil from '../account';
 
 const changeCluster = (clusterName) => {

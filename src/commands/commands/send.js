@@ -1,6 +1,7 @@
 import * as web3 from '@solana/web3.js';
 import Server from '../../server';
 import AccountUtil from '../../account';
+import PriceService from '../../services/PriceService';
 
 export default {
   name: 'send',
@@ -18,14 +19,14 @@ export default {
     try {
       publicKey = new web3.PublicKey(publicKeyString);
     } catch (err) {
-        message.channel.send('⚠️ Invalid recipient key ⚠️');
-        return;
+      message.channel.send('⚠️ Invalid recipient key ⚠️');
+      return;
     }
 
     // eslint-disable-next-line no-restricted-globals
     if (isNaN(solToSend) || solToSend <= 0) {
-        message.channel.send('⚠️ Invalid sol amount ⚠️');
-        return;
+      message.channel.send('⚠️ Invalid sol amount ⚠️');
+      return;
     }
 
     message.channel.send('Sending...');
@@ -37,11 +38,13 @@ export default {
       return;
     }
 
-    message.channel.send(`Successfully sent ${solToSend} Sol to ${publicKeyString} on cluster: ${Server.getCluster()} 💸💸\nSignature: ${signature}`);
+    const currentPrice = await PriceService.getSolPriceInUSD();
+    message.channel.send(`Successfully sent ${solToSend} Sol (~$${await PriceService.getDollarValueForSol(solToSend, currentPrice)}) to ${publicKeyString} on cluster: ${Server.getCluster()} 💸💸\nSignature: ${signature}`);
 
     try {
       const balance = await Server.getBalance(AccountUtil.getAccount().publicKey);
-      message.channel.send(`Your new account balance: ${balance * 0.000000001} Sol`);
+      const sol = PriceService.convertLamportsToSol(balance);
+      message.channel.send(`Your new account balance: ${sol} Sol (~$${await PriceService.getDollarValueForSol(sol, currentPrice)})`);
     } catch (e) {
       message.channel.send(e.message);
     }
