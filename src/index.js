@@ -7,7 +7,6 @@ import ConfigUtil, { commandPrefix } from './config';
 ConfigUtil.init();
 
 const main = async () => {
-  await AccountUtil.createAccountFromMnemonic('radar motor cement wave label train into tennis clerk step negative play');
   const client = new Discord.Client();
   await CommandUtil.initCommands(client);
   Server.init('testnet');
@@ -27,6 +26,10 @@ const main = async () => {
     }
 
     if (message.channel.type === 'dm') {
+      if(AccountUtil.getAccount() === null && !CommandUtil.creationCommands.includes(command)){
+        message.channel.send('🚧 You must configure a private key before making transfers. (commands: !create-new, !use-existing) 🚧')
+        return;
+      }
       client.commands.get(command).execute(message, args);
     }
   });
