@@ -1,17 +1,10 @@
 import * as web3 from '@solana/web3.js';
 
 export default {
-  async transfer(fromAccount, toPubKey, connection, sol) {
-    let recipient = '';
-    try {
-      recipient = new web3.PublicKey(toPubKey);
-    } catch (err) {
-      throw new Error('⚠️ Invalid recipient key ⚠️');
-    }
-
+  async transfer(fromAccount, toPubkey, connection, sol) {
     const transaction = web3.SystemProgram.transfer({
       fromPubkey: fromAccount.publicKey,
-      toPubkey: recipient,
+      toPubkey,
       lamports: sol * 1000000000,
     });
 

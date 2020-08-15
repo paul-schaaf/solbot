@@ -1,6 +1,6 @@
-import ClusterUtil from '../server/cluster';
-import { CLUSTERS } from '../config';
-import Server from '../server';
+import ClusterUtil from '../../server/cluster';
+import { CLUSTERS } from '../../config';
+import Server from '../../server';
 
 export default {
   name: 'cluster',
