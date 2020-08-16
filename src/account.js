@@ -18,7 +18,7 @@ const createAccountFromSecretKey = (secretKey) => {
 
 const deleteAccount = () => {
   account = null;
-}
+};
 
 export default {
   createAccountFromMnemonic,

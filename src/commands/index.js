@@ -20,5 +20,5 @@ const initCommands = async (client) => {
 
 export default {
   initCommands,
-  creationCommands: ['create-new', 'use-existing']
+  creationCommands: ['create-new', 'use-existing'],
 };

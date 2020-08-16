@@ -15,9 +15,10 @@ export default {
     const mnemonic = bip39.generateMnemonic();
     const account = await AccountUtil.createAccountFromMnemonic(mnemonic);
     await KeyService.setPrivateKey(userId, account.secretKey);
+    message.channel.send('🚧 I will save your private key for the next 12 hours! 🚧');
     message.channel.send(`Public key: ${account.publicKey}`);
     const seedPhraseMessage = await message.channel.send(`Seed phrase: ${mnemonic}`);
     message.channel.send('🚧 The previous message will self-destruct in 5 minutes 🚧');
-    seedPhraseMessage.delete({ timeout: 1000 * 60 * 5});
+    seedPhraseMessage.delete({ timeout: 1000 * 60 * 5 });
   },
 };

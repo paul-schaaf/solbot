@@ -26,8 +26,8 @@ const main = async () => {
     }
 
     if (message.channel.type === 'dm') {
-      if(AccountUtil.getAccount() === null && !CommandUtil.creationCommands.includes(command)){
-        message.channel.send('🚧 You must configure a private key before making transfers. (commands: !create-new, !use-existing) 🚧')
+      if (AccountUtil.getAccount() === null && !CommandUtil.creationCommands.includes(command)) {
+        message.channel.send('🚧 You must configure a private key before making transfers. (commands: !create-new, !use-existing) 🚧');
         return;
       }
       client.commands.get(command).execute(message, args);
