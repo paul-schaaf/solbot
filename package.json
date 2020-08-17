@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint src --fix",
     "start": "nodemon --exec babel-node src/index.js",
+    "migrate": "sequelize-cli db:migrate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Paul Schaaf",

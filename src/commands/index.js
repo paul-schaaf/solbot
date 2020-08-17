@@ -8,6 +8,9 @@ const COMMANDS = {
   CLUSTER: 'cluster',
   SEND: 'send',
   LOGOUT: 'logout',
+  SAVE_TIPKEY: 'save-tipkey',
+  DELETE_TIPKEY: 'delete-tipkey',
+  GET_TIPKEY: 'get-tipkey',
 };
 
 const initCommands = async (client) => {
@@ -30,4 +33,5 @@ const initCommands = async (client) => {
 export default {
   initCommands,
   creationCommands: [COMMANDS.CREATE_NEW, COMMANDS.LOGIN],
+  tipStorageCommands: [COMMANDS.SAVE_TIPKEY, COMMANDS.DELETE_TIPKEY, COMMANDS.GET_TIPKEY],
 };

@@ -34,7 +34,23 @@ const saveUser = async (user) => {
 
 const getUser = (discordId) => User.findOne({ where: { discordId } });
 
+const deleteUser = async (discordId) => {
+  try {
+    await DB.sequelize.transaction(async (t) => {
+      await User.destroy({
+        where: {
+          discordId,
+        },
+        transaction: t,
+      });
+    });
+  } catch (e) {
+    throw new Error(`Could not delete user with discordId: ${discordId}`);
+  }
+};
+
 export default {
   saveUser,
   getUser,
+  deleteUser,
 };
