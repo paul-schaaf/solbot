@@ -1,6 +1,15 @@
 import fs from 'fs';
 import Discord from 'discord.js';
 
+const COMMANDS = {
+  CREATE_NEW: 'create-new',
+  LOGIN: 'login',
+  ME: 'me',
+  CLUSTER: 'cluster',
+  SEND: 'send',
+  LOGOUT: 'logout',
+};
+
 const initCommands = async (client) => {
   // eslint-disable-next-line no-param-reassign
   client.commands = new Discord.Collection();
@@ -20,5 +29,5 @@ const initCommands = async (client) => {
 
 export default {
   initCommands,
-  creationCommands: ['create-new', 'use-existing'],
+  creationCommands: [COMMANDS.CREATE_NEW, COMMANDS.LOGIN],
 };

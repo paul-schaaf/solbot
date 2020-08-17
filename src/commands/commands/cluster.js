@@ -1,19 +1,18 @@
-import ClusterUtil from '../../server/cluster';
 import { CLUSTERS } from '../../config';
-import Server from '../../server';
+import WalletService from '../../services/WalletService';
 
 export default {
   name: 'cluster',
   description: 'Command for managing clusters',
-  execute(message, args) {
+  async execute(message, args) {
     if (args.length === 1) {
-      message.channel.send(`Currently selected cluster: ${ClusterUtil.getCluster()}`);
+      message.channel.send(`Currently selected cluster: ${await WalletService.getCluster(message.author.id)}`);
       return;
     }
-    if (Object.keys(CLUSTERS).includes(args[1].toUpperCase())) {
+    if (Object.values(CLUSTERS).includes(args[1].toLowerCase())) {
       try {
-        Server.changeCluster(args[1]);
-        message.channel.send(`Successfully switched to cluster: ${ClusterUtil.getCluster()}`);
+        await WalletService.setCluster(message.author.id, args[1].toLowerCase());
+        message.channel.send(`Successfully switched to cluster: ${args[1].toLowerCase()}`);
       } catch (e) {
         message.channel.send(e.message);
       }

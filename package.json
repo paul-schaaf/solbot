@@ -17,6 +17,7 @@
     "dotenv": "^8.2.0",
     "keyv": "^4.0.1",
     "node-fetch": "^2.6.0",
+    "sequelize": "^6.3.4",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
@@ -28,7 +29,9 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "husky": "^4.2.5",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "pg": "^8.3.0",
+    "sequelize-cli": "^6.2.0"
   },
   "husky": {
     "hooks": {

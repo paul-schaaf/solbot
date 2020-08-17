@@ -1,3 +1,4 @@
+import * as web3 from '@solana/web3.js';
 import { setConnection, getConnection } from './connection';
 import ClusterUtil from './cluster';
 import TransactionUtil from './transaction';
@@ -13,7 +14,10 @@ const init = (clusterName) => {
   setConnection(ClusterUtil.getCluster());
 };
 
-const getBalance = (publicKey) => getConnection().getBalance(publicKey);
+const getBalance = (publicKey, cluster) => {
+  const connection = new web3.Connection(web3.clusterApiUrl(cluster), 'recent');
+  return connection.getBalance(publicKey);
+};
 
 const transfer = (publicKeyString, sol) => TransactionUtil
   .transfer(AccountUtil.getAccount(), publicKeyString, getConnection(), sol);
