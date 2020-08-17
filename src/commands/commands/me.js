@@ -11,7 +11,11 @@ export default {
     const { publicKey } = await WalletService.getKeyPair(message.author.id);
     const cluster = await WalletService.getCluster(message.author.id);
     const sol = PriceService.convertLamportsToSol(await Server.getBalance(publicKey, cluster));
-    const dollarValue = await PriceService.getDollarValueForSol(sol);
-    message.channel.send(`Your public key: ${publicKey}\nYour account balance: ${sol} Sol (~$${dollarValue}) on cluster: ${cluster}`);
+    let dollarValue;
+    try {
+      dollarValue = await PriceService.getDollarValueForSol(sol);
+    } catch {}
+
+    message.channel.send(`Your public key: ${publicKey}\nYour account balance: ${sol} Sol ${dollarValue ? `(~${dollarValue}) ` : ''}on cluster: ${cluster}`);
   },
 };

@@ -63,13 +63,21 @@ export default {
       return;
     }
 
-    const currentPrice = await PriceService.getSolPriceInUSD();
-    message.channel.send(`💸 Successfully sent ${solToSend} Sol (~$${await PriceService.getDollarValueForSol(solToSend, currentPrice)}) to ${toPublicKeyString} on cluster: ${cluster} 💸\nSignature: ${signature}`);
+    let currentPrice;
+    try {
+      currentPrice = await PriceService.getSolPriceInUSD();
+    } catch {}
+
+    const dollarValue = currentPrice
+      ? await PriceService.getDollarValueForSol(solToSend, currentPrice)
+      : null;
+
+    message.channel.send(`💸 Successfully sent ${solToSend} Sol ${dollarValue ? `(~${dollarValue}) ` : ''}to ${toPublicKeyString} on cluster: ${cluster} 💸\nSignature: ${signature}`);
 
     try {
       const balance = await Server.getBalance(keypair.publicKey, cluster);
       const sol = PriceService.convertLamportsToSol(balance);
-      message.channel.send(`Your new account balance: ${sol} Sol (~$${await PriceService.getDollarValueForSol(sol, currentPrice)})`);
+      message.channel.send(`Your new account balance: ${sol} Sol ${currentPrice ? `(~${await PriceService.getDollarValueForSol(sol, currentPrice)})` : ''}`);
     } catch (e) {
       message.channel.send(e.message);
     }
