@@ -48,6 +48,8 @@ const login = async (id, privateKey, publicKey) => {
   return { keypair: { privateKey, publicKey }, cluster: CLUSTERS.MAINNET };
 };
 
+const isLoggedIn = async (id) => (!!(await getPrivateKey(id)));
+
 export default {
   setPrivateKey,
   getPrivateKey,
@@ -58,4 +60,5 @@ export default {
   setCluster,
   deleteAll,
   login,
+  isLoggedIn,
 };

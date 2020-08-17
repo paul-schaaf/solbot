@@ -14,4 +14,4 @@ export const CLUSTERS = {
   DEVNET: 'devnet',
 };
 
-export const commandPrefix = '!';
+export const COMMAND_PREFIX = '!';
