@@ -1,12 +1,12 @@
 import * as bip39 from 'bip39';
 import WalletService from '../../services/WalletService';
 import AccountUtil from '../../account';
-import {COMMAND_PREFIX} from "../../config";
+import { COMMAND_PREFIX } from '../../config';
 
 export default {
   name: 'create-new',
   description: 'Creates a new wallet and gives you seed phrase to write down. Logs you into wallet for 30 minutes.',
-  usage: [COMMAND_PREFIX + 'create-new'],
+  usage: [`${COMMAND_PREFIX}create-new`],
   async execute(message) {
     const userId = message.author.id;
     const mnemonic = bip39.generateMnemonic();

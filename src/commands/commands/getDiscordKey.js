@@ -1,10 +1,10 @@
 import UserService from '../../services/UserService';
-import {COMMAND_PREFIX} from "../../config";
+import { COMMAND_PREFIX } from '../../config';
 
 export default {
   name: 'get-discordkey',
   description: 'Displays your discord public key.',
-  usage: [COMMAND_PREFIX + 'get-discordkey'],
+  usage: [`${COMMAND_PREFIX}get-discordkey`],
   async execute(message) {
     let user = '';
     try {

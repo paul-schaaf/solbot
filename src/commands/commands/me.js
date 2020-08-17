@@ -1,12 +1,12 @@
 import Server from '../../server';
 import PriceService from '../../services/PriceService';
 import WalletService from '../../services/WalletService';
-import {COMMAND_PREFIX} from "../../config";
+import { COMMAND_PREFIX } from '../../config';
 
 export default {
   name: 'me',
   description: 'Returns public key and its balance for the currently selected cluster. You must be logged in to use this command.',
-  usage: [COMMAND_PREFIX + 'me'],
+  usage: [`${COMMAND_PREFIX}me`],
   async execute(message) {
     const { publicKey } = await WalletService.getKeyPair(message.author.id);
     const cluster = await WalletService.getCluster(message.author.id);

@@ -1,10 +1,10 @@
 import UserService from '../../services/UserService';
-import {COMMAND_PREFIX} from "../../config";
+import { COMMAND_PREFIX } from '../../config';
 
 export default {
   name: 'delete-discordkey',
   description: 'Deletes your discord public key.',
-  usage: [COMMAND_PREFIX + 'delete-discordkey'],
+  usage: [`${COMMAND_PREFIX}delete-discordkey`],
   async execute(message) {
     await UserService.deleteUser(message.author.id);
     message.channel.send('🥳 Successfully deleted discord public key 🥳');

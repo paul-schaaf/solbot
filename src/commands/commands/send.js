@@ -2,7 +2,7 @@ import Server from '../../server';
 import PriceService from '../../services/PriceService';
 import WalletService from '../../services/WalletService';
 import UserService from '../../services/UserService';
-import {COMMAND_PREFIX} from "../../config";
+import { COMMAND_PREFIX } from '../../config';
 
 function getUserFromMention(mention) {
   const matches = mention.match(/^<@!?(\d+)>$/);
@@ -14,9 +14,9 @@ function getUserFromMention(mention) {
 
 export default {
   name: 'send',
-  description: 'Lets you send sol to someone on the currently selected cluster. To specify the recipient,' +
-      'you can use a public key or tag someone with @<username> someone. You must be logged in to use this command.',
-  usage: [COMMAND_PREFIX + 'send 5 GsbwXfJraMomNxBcjYLcG3mxkBUiyWXAB32fGbSMQRdW', COMMAND_PREFIX + 'send 5 @<username>'],
+  description: 'Lets you send sol to someone on the currently selected cluster. To specify the recipient,'
+      + 'you can use a public key or tag someone with @<username> someone. You must be logged in to use this command.',
+  usage: [`${COMMAND_PREFIX}send 5 GsbwXfJraMomNxBcjYLcG3mxkBUiyWXAB32fGbSMQRdW`, `${COMMAND_PREFIX}send 5 @<username>`],
   async execute(message, args) {
     if (args.length !== 3) {
       message.channel.send('⚠️ Wrong number of arguments ⚠️');
