@@ -17,7 +17,7 @@ export default {
         { confirmations: 1 },
       );
     } catch (err) {
-      throw new Error('⚠️ Fees were paid, but the transaction failed ⚠️');
+      throw new Error('⚠️ Transaction failed ⚠️');
     }
     return signature;
   },

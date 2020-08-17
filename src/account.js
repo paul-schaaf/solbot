@@ -11,10 +11,7 @@ const createAccountFromMnemonic = async (mnemonic) => {
   return account;
 };
 
-const createAccountFromSecretKey = (secretKey) => {
-  account = new web3.Account(secretKey);
-  return account;
-};
+const createAccountFromSecretKey = (secretKey) => new web3.Account(secretKey);
 
 const deleteAccount = () => {
   account = null;

@@ -9,8 +9,12 @@ const clusters = new Keyv();
 const EXPIRING_TIME = 1000 * 60 * 30; // 30 minutes;
 
 const setKeyPair = async (id, privateKey, publicKey) => {
-  await privateKeys.set(id, privateKey, EXPIRING_TIME);
-  await publicKeys.set(id, publicKey.toString(), EXPIRING_TIME);
+  await Promise
+    .all([
+      privateKeys.set(id, privateKey, EXPIRING_TIME),
+      publicKeys.set(id, publicKey.toString(), EXPIRING_TIME),
+    ]);
+  return { privateKey, publicKey };
 };
 
 const getKeyPair = async (id) => ({
@@ -37,8 +41,11 @@ const getPrivateKey = (id) => privateKeys.get(id);
 const deletePrivateKey = (id) => privateKeys.delete(id);
 
 const login = async (id, privateKey, publicKey) => {
-  await setKeyPair(id, privateKey, publicKey);
-  await setCluster(id, 'mainnet-beta');
+  await Promise.all([
+    setKeyPair(id, privateKey, publicKey),
+    setCluster(id, CLUSTERS.MAINNET),
+  ]);
+  return { keypair: { privateKey, publicKey }, cluster: CLUSTERS.MAINNET };
 };
 
 export default {
