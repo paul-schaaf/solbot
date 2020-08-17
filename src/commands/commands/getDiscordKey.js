@@ -1,8 +1,10 @@
 import UserService from '../../services/UserService';
+import {COMMAND_PREFIX} from "../../config";
 
 export default {
-  name: 'get-tipkey',
-  description: 'Command that displays tip public key',
+  name: 'get-discordkey',
+  description: 'Displays your discord public key.',
+  usage: [COMMAND_PREFIX + 'get-discordkey'],
   async execute(message) {
     let user = '';
     try {
@@ -12,9 +14,9 @@ export default {
       return;
     }
     if (!user) {
-      message.channel.send('You don\'t have a tip public key configured yet. Configure one to receive tips through discord!');
+      message.channel.send('You don\'t have a discord public key configured yet. Configure one to receive tips through discord!');
       return;
     }
-    message.channel.send(`Your tip public key: ${user.publicKey}`);
+    message.channel.send(`Your discord public key: ${user.publicKey}`);
   },
 };

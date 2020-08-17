@@ -23,8 +23,7 @@ const initHandler = async () => {
 
     if (message.channel.type === 'dm') {
       if (!(await WalletService.isLoggedIn(message.author.id))
-                && !CommandUtil.creationCommands.includes(command)
-                && !CommandUtil.tipStorageCommands.includes(command)
+          && !CommandUtil.OK_WITHOUT_LOGIN_COMMANDS.includes(command)
       ) {
         message.channel.send(
           `🚧 You must create a wallet or login before making transfers. (commands: ${CommandUtil.creationCommands.map((c) => COMMAND_PREFIX + c)}) 🚧`,

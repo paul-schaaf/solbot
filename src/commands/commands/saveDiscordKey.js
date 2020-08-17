@@ -1,9 +1,13 @@
 import * as web3 from '@solana/web3.js';
 import UserService from '../../services/UserService';
+import {COMMAND_PREFIX} from "../../config";
 
 export default {
-  name: 'save-tipkey',
-  description: 'Command that saves tip public key',
+  name: 'save-discordkey',
+  description:
+      'Use this command to connect your discordId to a public key.' +
+      ` Whenever someone sends you money using: '!send <amount> @<yourUsername>', this is the public key their sol will be sent to.`,
+  usage: [COMMAND_PREFIX + 'save-discordkey <publicKeyString>'],
   async execute(message, args) {
     if (args.length === 1) {
       message.channel.send('⚠️ Public key missing! ⚠️');

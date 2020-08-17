@@ -8,10 +8,22 @@ const COMMANDS = {
   CLUSTER: 'cluster',
   SEND: 'send',
   LOGOUT: 'logout',
-  SAVE_TIPKEY: 'save-tipkey',
-  DELETE_TIPKEY: 'delete-tipkey',
-  GET_TIPKEY: 'get-tipkey',
+  SAVE_DISCORDKEY: 'save-discordkey',
+  DELETE_DISCORDKEY: 'delete-discordkey',
+  GET_DISCORDKEY: 'get-discordkey',
+  HELP: 'help',
 };
+
+const OK_WITHOUT_LOGIN_COMMANDS = [
+  COMMANDS.CREATE_NEW,
+  COMMANDS.LOGIN,
+  COMMANDS.SAVE_DISCORDKEY,
+  COMMANDS.DELETE_DISCORDKEY,
+  COMMANDS.GET_DISCORDKEY,
+  COMMANDS.HELP,
+];
+
+let allCommands;
 
 const initCommands = async (client) => {
   // eslint-disable-next-line no-param-reassign
@@ -28,10 +40,12 @@ const initCommands = async (client) => {
   const promises = commandFiles.map(setCommand);
 
   await Promise.all(promises);
+  allCommands = client.commands;
 };
 
 export default {
   initCommands,
   creationCommands: [COMMANDS.CREATE_NEW, COMMANDS.LOGIN],
-  tipStorageCommands: [COMMANDS.SAVE_TIPKEY, COMMANDS.DELETE_TIPKEY, COMMANDS.GET_TIPKEY],
+  OK_WITHOUT_LOGIN_COMMANDS,
+  getAllCommands: () => allCommands
 };

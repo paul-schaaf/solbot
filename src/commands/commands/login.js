@@ -3,10 +3,12 @@ import WalletService from '../../services/WalletService';
 import AccountUtil from '../../account';
 import PriceService from '../../services/PriceService';
 import Server from '../../server';
+import {COMMAND_PREFIX} from "../../config";
 
 export default {
   name: 'login',
-  description: 'Command that logs in user for 30 minutes',
+  description: 'Logs you in for 30 minutes. Use "!logout" to logout earlier.',
+  usage: [COMMAND_PREFIX + 'login <seed phrase>'],
   async execute(message, args) {
     const userId = message.author.id;
     const mnemonic = args.slice(1).join(' ');
