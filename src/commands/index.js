@@ -48,4 +48,5 @@ export default {
   creationCommands: [COMMANDS.CREATE_NEW, COMMANDS.LOGIN],
   OK_WITHOUT_LOGIN_COMMANDS,
   getAllCommands: () => allCommands,
+  COMMANDS,
 };

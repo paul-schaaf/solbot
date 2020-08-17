@@ -21,15 +21,19 @@ const initHandler = async () => {
       return;
     }
 
+    if (!(await WalletService.isLoggedIn(message.author.id))
+        && !CommandUtil.OK_WITHOUT_LOGIN_COMMANDS.includes(command)
+    ) {
+      message.channel.send(
+          `🚧 You must create a wallet or login before making transfers. (commands: ${CommandUtil.creationCommands.map((c) => COMMAND_PREFIX + c).join(', ')}) 🚧`
+          + `\n🚧 This must be done in a private dm channel 🚧`,
+      );
+      return;
+    }
+
     if (message.channel.type === 'dm') {
-      if (!(await WalletService.isLoggedIn(message.author.id))
-          && !CommandUtil.OK_WITHOUT_LOGIN_COMMANDS.includes(command)
-      ) {
-        message.channel.send(
-          `🚧 You must create a wallet or login before making transfers. (commands: ${CommandUtil.creationCommands.map((c) => COMMAND_PREFIX + c)}) 🚧`,
-        );
-        return;
-      }
+      await client.commands.get(command).execute(message, args);
+    } else if (CommandUtil.COMMANDS.SEND === command) {
       await client.commands.get(command).execute(message, args);
     }
   });
