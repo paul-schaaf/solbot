@@ -73,7 +73,7 @@ export default {
       ? await PriceService.getDollarValueForSol(solToSend, currentPrice)
       : null;
 
-    if(message.channel.type === 'dm'){
+    if (message.channel.type === 'dm') {
       message.channel.send(`💸 Successfully sent ${solToSend} Sol ${dollarValue ? `(~${dollarValue}) ` : ''}to ${toPublicKeyString} on cluster: ${cluster} 💸\nSignature: ${signature}`);
       try {
         const balance = await Server.getBalance(keypair.publicKey, cluster);
@@ -83,7 +83,7 @@ export default {
         message.channel.send(e.message);
       }
     } else {
-      message.channel.send(`💸 Successfully sent ${solToSend} Sol 💸`)
+      message.channel.send(`💸 Successfully sent ${solToSend} Sol 💸`);
     }
   },
 };
