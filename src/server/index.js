@@ -18,7 +18,17 @@ const transfer = (cluster, fromPrivateKey, toPublicKeyString, sol) => {
   return TransactionUtil.transfer(new web3.Account(fromPrivateKey), publicKey, connection, sol);
 };
 
+const isValidPublicKey = (publicKeyString) => {
+  try {
+    new web3.PublicKey(publicKeyString);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
 export default {
   getBalance,
   transfer,
+  isValidPublicKey,
 };

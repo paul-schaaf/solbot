@@ -1,18 +1,42 @@
 import Server from '../../server';
 import PriceService from '../../services/PriceService';
 import WalletService from '../../services/WalletService';
+import UserService from '../../services/UserService';
+
+function getUserFromMention(mention) {
+  const matches = mention.match(/^<@!?(\d+)>$/);
+  if (!matches) {
+    return null;
+  }
+  return matches[1];
+}
 
 export default {
   name: 'send',
   description: 'Command to send sol to someone',
   async execute(message, args) {
     if (args.length !== 3) {
-      message.channel.send('⚠️ Wrong amount of arguments ⚠️');
+      message.channel.send('⚠️ Wrong number of arguments ⚠️');
       return;
     }
 
-    const solToSend = parseInt(args[1], 10);
-    const toPublicKeyString = args[2];
+    const solToSend = parseFloat(args[1]);
+    let toPublicKeyString = args[2];
+
+    if (!Server.isValidPublicKey(args[2])) {
+      const recipientId = getUserFromMention(args[2]);
+      if (!recipientId) {
+        message.channel.send('⚠️ Given recipient is neither a public key nor a user ⚠️');
+        return;
+      }
+      const recipient = await UserService.getUser(recipientId);
+      if (!recipient) {
+        message.channel.send('⚠️ Given recipient has not registered a tip public key ⚠️');
+        return;
+      }
+
+      toPublicKeyString = recipient.publicKey;
+    }
 
     // eslint-disable-next-line no-restricted-globals
     if (isNaN(solToSend) || solToSend <= 0) {
@@ -37,7 +61,7 @@ export default {
     }
 
     const currentPrice = await PriceService.getSolPriceInUSD();
-    message.channel.send(`Successfully sent ${solToSend} Sol (~$${await PriceService.getDollarValueForSol(solToSend, currentPrice)}) to ${toPublicKeyString} on cluster: ${cluster} 💸💸\nSignature: ${signature}`);
+    message.channel.send(`💸 Successfully sent ${solToSend} Sol (~$${await PriceService.getDollarValueForSol(solToSend, currentPrice)}) to ${toPublicKeyString} on cluster: ${cluster} 💸\nSignature: ${signature}`);
 
     try {
       const balance = await Server.getBalance(keypair.publicKey, cluster);

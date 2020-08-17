@@ -27,7 +27,7 @@ const initHandler = async () => {
                 && !CommandUtil.tipStorageCommands.includes(command)
       ) {
         message.channel.send(
-          `🚧 You must configure a private key before making transfers. (commands: ${CommandUtil.creationCommands.map((c) => COMMAND_PREFIX + c)}) 🚧`,
+          `🚧 You must create a wallet or login before making transfers. (commands: ${CommandUtil.creationCommands.map((c) => COMMAND_PREFIX + c)}) 🚧`,
         );
         return;
       }
