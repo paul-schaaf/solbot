@@ -14,6 +14,7 @@ export default {
       account = await Solana.createAccountFromMnemonic(args.slice(1).join(' '));
     } catch (e) {
       message.channel.send(e.message);
+      return;
     }
     const { publicKey, secretKey: privateKey } = account;
     const publicKeyString = publicKey.toString();

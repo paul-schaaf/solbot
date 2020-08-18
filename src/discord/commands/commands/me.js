@@ -16,8 +16,6 @@ export default {
       dollarValue = await PriceService.getDollarValueForSol(sol);
     } catch {}
 
-
-
     message.channel.send(`Your public key: ${publicKey}\nYour account balance: ${sol} Sol ${dollarValue ? `(~${dollarValue}) ` : ''}on cluster: ${cluster}`);
   },
 };
