@@ -17,6 +17,7 @@ export default {
         { confirmations: 1 },
       );
     } catch (err) {
+      console.log(err);
       throw new Error('⚠️ Transaction failed ⚠️');
     }
     return signature;

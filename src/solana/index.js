@@ -1,34 +1,26 @@
 import * as web3 from '@solana/web3.js';
 import TransactionUtil from './transaction';
+import AccountUtil from './account';
+import PublicKeyUtil from './publicKey';
 
 const getBalance = (publicKey, cluster) => {
   const connection = new web3.Connection(web3.clusterApiUrl(cluster), 'recent');
-  return connection.getBalance(publicKey);
+  return connection.getBalance(new web3.PublicKey(publicKey));
 };
 
 const transfer = (cluster, fromPrivateKey, toPublicKeyString, sol) => {
-  let publicKey = '';
-  try {
-    publicKey = new web3.PublicKey(toPublicKeyString);
-  } catch (err) {
+  if (!PublicKeyUtil.isValidPublicKey(toPublicKeyString)) {
     throw new Error('⚠️ Invalid recipient key ⚠️');
   }
-
   const connection = new web3.Connection(web3.clusterApiUrl(cluster), 'recent');
+  const publicKey = new web3.PublicKey(toPublicKeyString);
   return TransactionUtil.transfer(new web3.Account(fromPrivateKey), publicKey, connection, sol);
-};
-
-const isValidPublicKey = (publicKeyString) => {
-  try {
-    new web3.PublicKey(publicKeyString);
-    return true;
-  } catch (err) {
-    return false;
-  }
 };
 
 export default {
   getBalance,
   transfer,
-  isValidPublicKey,
+  isValidPublicKey: PublicKeyUtil.isValidPublicKey,
+  createAccountFromMnemonic: AccountUtil.createAccountFromMnemonic,
+  createAccount: AccountUtil.createAccount,
 };

@@ -1,6 +1,6 @@
-import * as web3 from '@solana/web3.js';
 import UserService from '../../services/UserService';
 import { COMMAND_PREFIX } from '../../config';
+import Solana from '../../solana';
 
 export default {
   name: 'save-discordkey',
@@ -15,9 +15,7 @@ export default {
     }
     const publicKeyString = args[1];
 
-    try {
-      new web3.PublicKey(publicKeyString);
-    } catch (e) {
+    if (!Solana.isValidPublicKey(publicKeyString)) {
       message.channel.send('⚠️ Invalid public key! ⚠️');
       return;
     }

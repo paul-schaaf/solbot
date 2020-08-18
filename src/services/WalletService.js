@@ -1,5 +1,4 @@
 import Keyv from 'keyv';
-import * as web3 from '@solana/web3.js';
 import { CLUSTERS } from '../config';
 
 const privateKeys = new Keyv();
@@ -12,15 +11,20 @@ const setKeyPair = async (id, privateKey, publicKey) => {
   await Promise
     .all([
       privateKeys.set(id, privateKey, EXPIRING_TIME),
-      publicKeys.set(id, publicKey.toString(), EXPIRING_TIME),
+      publicKeys.set(id, publicKey, EXPIRING_TIME),
     ]);
   return { privateKey, publicKey };
 };
 
-const getKeyPair = async (id) => ({
-  privateKey: await privateKeys.get(id),
-  publicKey: new web3.PublicKey(await publicKeys.get(id)),
-});
+const getKeyPair = async (id) => {
+  const [privateKey, publicKey] = await Promise
+    .all([await privateKeys.get(id), await publicKeys.get(id)]);
+
+  return {
+    privateKey,
+    publicKey,
+  };
+};
 
 const setCluster = (id, clusterName) => {
   if (Object.values(CLUSTERS).includes(clusterName.toLowerCase())) {
@@ -54,7 +58,6 @@ export default {
   setPrivateKey,
   getPrivateKey,
   deletePrivateKey,
-  setKeyPair,
   getKeyPair,
   getCluster,
   setCluster,

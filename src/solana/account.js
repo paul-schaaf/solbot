@@ -3,11 +3,26 @@ import nacl from 'tweetnacl';
 import * as web3 from '@solana/web3.js';
 
 const createAccountFromMnemonic = async (mnemonic) => {
+  if (!bip39.validateMnemonic(mnemonic)) {
+    throw new Error('⚠️ Invalid seed phrase ⚠️');
+  }
   const seed = await bip39.mnemonicToSeed(mnemonic);
   const keyPair = nacl.sign.keyPair.fromSeed(seed.slice(0, 32));
   return new web3.Account(keyPair.secretKey);
 };
 
+const createAccount = async () => {
+  const mnemonic = bip39.generateMnemonic();
+  const { publicKey, secretKey: privateKey } = await createAccountFromMnemonic(mnemonic);
+
+  return {
+    privateKey,
+    publicKey,
+    mnemonic,
+  };
+};
+
 export default {
   createAccountFromMnemonic,
+  createAccount,
 };

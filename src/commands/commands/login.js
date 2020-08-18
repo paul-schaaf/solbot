@@ -1,8 +1,6 @@
-import * as bip39 from 'bip39';
 import WalletService from '../../services/WalletService';
-import AccountUtil from '../../account';
 import PriceService from '../../services/PriceService';
-import Server from '../../server';
+import Solana from '../../solana';
 import { COMMAND_PREFIX } from '../../config';
 
 export default {
@@ -11,18 +9,19 @@ export default {
   usage: [`${COMMAND_PREFIX}login <seed phrase>`],
   async execute(message, args) {
     const userId = message.author.id;
-    const mnemonic = args.slice(1).join(' ');
-    if (!bip39.validateMnemonic(mnemonic)) {
-      message.channel.send('⚠️ Invalid seed phrase ⚠️');
-      return;
+    let account;
+    try {
+      account = await Solana.createAccountFromMnemonic(args.slice(1).join(' '));
+    } catch (e) {
+      message.channel.send(e.message);
     }
-    const account = await AccountUtil.createAccountFromMnemonic(mnemonic);
     const { publicKey, secretKey: privateKey } = account;
-    const { cluster } = await WalletService.login(userId, privateKey, publicKey.toString());
+    const publicKeyString = publicKey.toString();
+    const { cluster } = await WalletService.login(userId, privateKey, publicKeyString);
 
     const sol = PriceService
       .convertLamportsToSol(
-        await Server.getBalance(publicKey, cluster),
+        await Solana.getBalance(publicKeyString, cluster),
       );
 
     let dollarValue;

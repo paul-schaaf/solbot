@@ -1,4 +1,4 @@
-import Server from '../../server';
+import Solana from '../../solana';
 import PriceService from '../../services/PriceService';
 import WalletService from '../../services/WalletService';
 import { COMMAND_PREFIX } from '../../config';
@@ -10,7 +10,7 @@ export default {
   async execute(message) {
     const { publicKey } = await WalletService.getKeyPair(message.author.id);
     const cluster = await WalletService.getCluster(message.author.id);
-    const sol = PriceService.convertLamportsToSol(await Server.getBalance(publicKey, cluster));
+    const sol = PriceService.convertLamportsToSol(await Solana.getBalance(publicKey, cluster));
     let dollarValue;
     try {
       dollarValue = await PriceService.getDollarValueForSol(sol);
