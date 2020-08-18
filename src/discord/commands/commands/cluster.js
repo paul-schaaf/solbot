@@ -1,5 +1,5 @@
-import { CLUSTERS, COMMAND_PREFIX } from '../../config';
-import WalletService from '../../services/WalletService';
+import { CLUSTERS, COMMAND_PREFIX } from '../../../config';
+import WalletService from '../../../wallet/WalletService';
 
 export default {
   name: 'cluster',

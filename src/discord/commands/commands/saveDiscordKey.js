@@ -1,6 +1,6 @@
-import UserService from '../../services/UserService';
-import { COMMAND_PREFIX } from '../../config';
-import Solana from '../../solana';
+import UserService from '../../../publicKeyStorage/UserService';
+import { COMMAND_PREFIX } from '../../../config';
+import Solana from '../../../solana';
 
 export default {
   name: 'save-discordkey',

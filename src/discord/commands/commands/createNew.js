@@ -1,6 +1,6 @@
-import WalletService from '../../services/WalletService';
-import Solana from '../../solana';
-import { COMMAND_PREFIX } from '../../config';
+import WalletService from '../../../wallet/WalletService';
+import Solana from '../../../solana';
+import { COMMAND_PREFIX } from '../../../config';
 
 export default {
   name: 'create-new',

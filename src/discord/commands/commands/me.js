@@ -1,7 +1,7 @@
-import Solana from '../../solana';
-import PriceService from '../../services/PriceService';
-import WalletService from '../../services/WalletService';
-import { COMMAND_PREFIX } from '../../config';
+import Solana from '../../../solana';
+import PriceService from '../../../price/PriceService';
+import WalletService from '../../../wallet/WalletService';
+import { COMMAND_PREFIX } from '../../../config';
 
 export default {
   name: 'me',
@@ -15,6 +15,8 @@ export default {
     try {
       dollarValue = await PriceService.getDollarValueForSol(sol);
     } catch {}
+
+
 
     message.channel.send(`Your public key: ${publicKey}\nYour account balance: ${sol} Sol ${dollarValue ? `(~${dollarValue}) ` : ''}on cluster: ${cluster}`);
   },

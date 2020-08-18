@@ -1,5 +1,5 @@
-import WalletService from '../../services/WalletService';
-import { COMMAND_PREFIX } from '../../config';
+import WalletService from '../../../wallet/WalletService';
+import { COMMAND_PREFIX } from '../../../config';
 
 export default {
   name: 'logout',

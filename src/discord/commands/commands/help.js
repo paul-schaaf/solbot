@@ -1,6 +1,6 @@
 import Discord from 'discord.js';
 import CommandUtil from '../index';
-import { COMMAND_PREFIX } from '../../config';
+import { COMMAND_PREFIX } from '../../../config';
 
 export default {
   name: 'help',

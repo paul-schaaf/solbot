@@ -1,5 +1,5 @@
-import UserService from '../../services/UserService';
-import { COMMAND_PREFIX } from '../../config';
+import UserService from '../../../publicKeyStorage/UserService';
+import { COMMAND_PREFIX } from '../../../config';
 
 export default {
   name: 'delete-discordkey',

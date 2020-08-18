@@ -1,8 +1,8 @@
-import Solana from '../../solana';
-import PriceService from '../../services/PriceService';
-import WalletService from '../../services/WalletService';
-import UserService from '../../services/UserService';
-import { COMMAND_PREFIX } from '../../config';
+import Solana from '../../../solana';
+import PriceService from '../../../price/PriceService';
+import WalletService from '../../../wallet/WalletService';
+import UserService from '../../../publicKeyStorage/UserService';
+import { COMMAND_PREFIX } from '../../../config';
 
 function getUserFromMention(mention) {
   const matches = mention.match(/^<@!?(\d+)>$/);

@@ -1,7 +1,7 @@
-import WalletService from '../../services/WalletService';
-import PriceService from '../../services/PriceService';
-import Solana from '../../solana';
-import { COMMAND_PREFIX } from '../../config';
+import WalletService from '../../../wallet/WalletService';
+import PriceService from '../../../price/PriceService';
+import Solana from '../../../solana';
+import { COMMAND_PREFIX } from '../../../config';
 
 export default {
   name: 'login',

@@ -1,7 +1,7 @@
 import Discord from 'discord.js';
-import CommandUtil from '../commands';
+import CommandUtil from './commands';
 import { COMMAND_PREFIX } from '../config';
-import WalletService from '../services/WalletService';
+import WalletService from '../wallet/WalletService';
 
 const initHandler = async () => {
   const client = new Discord.Client();

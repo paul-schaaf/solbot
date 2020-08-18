@@ -1,4 +1,4 @@
-import PriceAPI from '../adapters/priceAPI';
+import PriceAPI from './priceAPI';
 
 const convertLamportsToSol = (lamports) => (lamports * 0.000000001).toFixed(4);
 
