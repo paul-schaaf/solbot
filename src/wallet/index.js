@@ -32,5 +32,5 @@ export default {
   createAccountFromMnemonic: Solana.createAccountFromMnemonic,
   getBalance: Solana.getBalance,
   isValidPublicKey: Solana.isValidPublicKey,
-  transfer: Solana.transfer
+  transfer: Solana.transfer,
 };
