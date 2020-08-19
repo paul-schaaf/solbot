@@ -7,7 +7,7 @@ export default {
   usage: [`${COMMAND_PREFIX}logout`],
   async execute(message) {
     const userId = message.author.id;
-    await WalletService.deleteAll(userId);
+    await WalletService.logout(userId);
     message.channel.send('🥳 Successfully logged out 🥳');
   },
 };
