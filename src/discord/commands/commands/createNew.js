@@ -1,5 +1,4 @@
-import WalletService from '../../../wallet/WalletService';
-import Solana from '../../../solana';
+import Wallet from '../../../wallet';
 import { COMMAND_PREFIX } from '../../../config';
 
 export default {
@@ -8,9 +7,9 @@ export default {
   usage: [`${COMMAND_PREFIX}create-new`],
   async execute(message) {
     const userId = message.author.id;
-    const account = await Solana.createAccount();
+    const account = await Wallet.createAccount();
     const { publicKey, privateKey, mnemonic } = account;
-    await WalletService.login(userId, privateKey, publicKey.toString());
+    await Wallet.login(userId, privateKey, publicKey.toString());
     message.channel.send('🎁 Here\'s your new account! 🎁');
     message.channel.send(`Public key: ${account.publicKey}`);
     const seedPhraseMessage = await message.channel.send(`Seed phrase: ${mnemonic}`);

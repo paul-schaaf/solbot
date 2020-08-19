@@ -1,5 +1,5 @@
 import { CLUSTERS, COMMAND_PREFIX } from '../../../config';
-import WalletService from '../../../wallet/WalletService';
+import Wallet from '../../../wallet';
 
 export default {
   name: 'cluster',
@@ -8,12 +8,12 @@ export default {
   usage: [`${COMMAND_PREFIX}cluster to get the current cluster`, `${COMMAND_PREFIX}cluster <clusterName> to switch cluster`],
   async execute(message, args) {
     if (args.length === 1) {
-      message.channel.send(`Currently selected cluster: ${await WalletService.getCluster(message.author.id)}`);
+      message.channel.send(`Currently selected cluster: ${await Wallet.getCluster(message.author.id)}`);
       return;
     }
     if (Object.values(CLUSTERS).includes(args[1].toLowerCase())) {
       try {
-        await WalletService.setCluster(message.author.id, args[1].toLowerCase());
+        await Wallet.setCluster(message.author.id, args[1].toLowerCase());
         message.channel.send(`Successfully switched to cluster: ${args[1].toLowerCase()}`);
       } catch (e) {
         message.channel.send(e.message);

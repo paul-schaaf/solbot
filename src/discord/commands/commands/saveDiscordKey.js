@@ -1,6 +1,6 @@
 import UserService from '../../../publicKeyStorage/UserService';
 import { COMMAND_PREFIX } from '../../../config';
-import Solana from '../../../solana';
+import Wallet from '../../../wallet';
 
 export default {
   name: 'save-discordkey',
@@ -15,7 +15,7 @@ export default {
     }
     const publicKeyString = args[1];
 
-    if (!Solana.isValidPublicKey(publicKeyString)) {
+    if (!Wallet.isValidPublicKey(publicKeyString)) {
       message.channel.send('⚠️ Invalid public key! ⚠️');
       return;
     }

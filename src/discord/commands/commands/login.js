@@ -1,6 +1,5 @@
-import WalletService from '../../../wallet/WalletService';
+import Wallet from '../../../wallet';
 import PriceService from '../../../price/PriceService';
-import Solana from '../../../solana';
 import { COMMAND_PREFIX } from '../../../config';
 
 export default {
@@ -11,18 +10,18 @@ export default {
     const userId = message.author.id;
     let account;
     try {
-      account = await Solana.createAccountFromMnemonic(args.slice(1).join(' '));
+      account = await Wallet.createAccountFromMnemonic(args.slice(1).join(' '));
     } catch (e) {
       message.channel.send(e.message);
       return;
     }
     const { publicKey, secretKey: privateKey } = account;
     const publicKeyString = publicKey.toString();
-    const { cluster } = await WalletService.login(userId, privateKey, publicKeyString);
+    const { cluster } = await Wallet.login(userId, privateKey, publicKeyString);
 
     const sol = PriceService
       .convertLamportsToSol(
-        await Solana.getBalance(publicKeyString, cluster),
+        await Wallet.getBalance(publicKeyString, cluster),
       );
 
     let dollarValue;

@@ -1,5 +1,6 @@
 import { CLUSTERS } from '../config';
 import SessionStorageService from './SessionStorageService';
+import Solana from '../solana';
 
 const EXPIRY_TIME = 1000 * 60 * 30; // 30 minutes;
 
@@ -27,4 +28,9 @@ export default {
   login,
   logout: SessionStorageService.deleteAll,
   isLoggedIn,
+  createAccount: Solana.createAccount,
+  createAccountFromMnemonic: Solana.createAccountFromMnemonic,
+  getBalance: Solana.getBalance,
+  isValidPublicKey: Solana.isValidPublicKey,
+  transfer: Solana.transfer
 };

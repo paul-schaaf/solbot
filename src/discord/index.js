@@ -1,7 +1,7 @@
 import Discord from 'discord.js';
 import CommandUtil from './commands';
 import { COMMAND_PREFIX } from '../config';
-import WalletService from '../wallet/WalletService';
+import Wallet from '../wallet';
 
 const initHandler = async () => {
   const client = new Discord.Client();
@@ -21,7 +21,7 @@ const initHandler = async () => {
       return;
     }
 
-    if (!(await WalletService.isLoggedIn(message.author.id))
+    if (!(await Wallet.isLoggedIn(message.author.id))
         && !CommandUtil.OK_WITHOUT_LOGIN_COMMANDS.includes(command)
     ) {
       message.channel.send(

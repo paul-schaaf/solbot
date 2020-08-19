@@ -1,6 +1,5 @@
-import Solana from '../../../solana';
 import PriceService from '../../../price/PriceService';
-import WalletService from '../../../wallet/WalletService';
+import Wallet from '../../../wallet';
 import { COMMAND_PREFIX } from '../../../config';
 
 export default {
@@ -8,9 +7,9 @@ export default {
   description: 'Returns public key and its balance for the currently selected cluster. You must be logged in to use this command.',
   usage: [`${COMMAND_PREFIX}me`],
   async execute(message) {
-    const { publicKey } = await WalletService.getKeyPair(message.author.id);
-    const cluster = await WalletService.getCluster(message.author.id);
-    const sol = PriceService.convertLamportsToSol(await Solana.getBalance(publicKey, cluster));
+    const { publicKey } = await Wallet.getKeyPair(message.author.id);
+    const cluster = await Wallet.getCluster(message.author.id);
+    const sol = PriceService.convertLamportsToSol(await Wallet.getBalance(publicKey, cluster));
     let dollarValue;
     try {
       dollarValue = await PriceService.getDollarValueForSol(sol);

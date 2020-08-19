@@ -1,6 +1,5 @@
-import Solana from '../../../solana';
 import PriceService from '../../../price/PriceService';
-import WalletService from '../../../wallet/WalletService';
+import Wallet from '../../../wallet';
 import UserService from '../../../publicKeyStorage/UserService';
 import { COMMAND_PREFIX } from '../../../config';
 
@@ -27,7 +26,7 @@ export default {
     const solToSend = parseFloat(args[1]);
     let toPublicKeyString = args[2];
 
-    if (!Solana.isValidPublicKey(args[2])) {
+    if (!Wallet.isValidPublicKey(args[2])) {
       const recipientId = getUserFromMention(args[2]);
       if (!recipientId) {
         message.channel.send('⚠️ Given recipient is neither a public key nor a user ⚠️');
@@ -51,13 +50,13 @@ export default {
     message.channel.send('Sending...');
 
     const userId = message.author.id;
-    const cluster = await WalletService.getCluster(userId);
-    const keypair = await WalletService.getKeyPair(userId);
+    const cluster = await Wallet.getCluster(userId);
+    const keypair = await Wallet.getKeyPair(userId);
     const { privateKey } = keypair;
 
     let signature = '';
     try {
-      signature = await Solana
+      signature = await Wallet
         .transfer(cluster, Object.values(privateKey), toPublicKeyString, solToSend);
     } catch (e) {
       message.channel.send(e.message);
@@ -76,7 +75,7 @@ export default {
     if (message.channel.type === 'dm') {
       message.channel.send(`💸 Successfully sent ${solToSend} Sol ${dollarValue ? `(~${dollarValue}) ` : ''}to ${toPublicKeyString} on cluster: ${cluster} 💸\nSignature: ${signature}`);
       try {
-        const balance = await Solana.getBalance(keypair.publicKey, cluster);
+        const balance = await Wallet.getBalance(keypair.publicKey, cluster);
         const sol = PriceService.convertLamportsToSol(balance);
         message.channel.send(`Your new account balance: ${sol} Sol ${currentPrice ? `(~${await PriceService.getDollarValueForSol(sol, currentPrice)})` : ''}`);
       } catch (e) {
