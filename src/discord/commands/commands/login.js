@@ -35,7 +35,7 @@ export default {
 
     message.channel.send('🥳 You\'re logged in for 30 minutes, use \'!logout\' to logout earlier! 🥳');
     message.channel.send(`ℹ️ You're currently on cluster: ${cluster}. Use '!cluster' to switch between clusters! ℹ️`);
-    message.channel.send(`Your public key: ${publicKey}\nYour account balance: ${sol} Sol ${dollarValue ? `(~${dollarValue})` : ''}`);
+    message.channel.send(`Your public key: ${publicKey}\nYour account balance: ${sol} Sol ${dollarValue ? `(~$${dollarValue})` : ''}`);
     message.channel.send('🚨 Please consider deleting your previous message now to keep your seed phrase secret 🚨');
   },
 };
