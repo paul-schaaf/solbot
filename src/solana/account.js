@@ -8,12 +8,16 @@ const createAccountFromMnemonic = async (mnemonic) => {
   }
   const seed = await bip39.mnemonicToSeed(mnemonic);
   const keyPair = nacl.sign.keyPair.fromSeed(seed.slice(0, 32));
-  return new web3.Account(keyPair.secretKey);
+  const acc = new web3.Account(keyPair.secretKey);
+  return {
+    privateKey: acc.secretKey,
+    publicKey: acc.publicKey.toString(),
+  };
 };
 
 const createAccount = async () => {
   const mnemonic = bip39.generateMnemonic();
-  const { publicKey, secretKey: privateKey } = await createAccountFromMnemonic(mnemonic);
+  const { publicKey, privateKey } = await createAccountFromMnemonic(mnemonic);
 
   return {
     privateKey,

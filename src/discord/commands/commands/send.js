@@ -3,13 +3,21 @@ import Wallet from '../../../wallet';
 import UserService from '../../../publicKeyStorage/UserService';
 import { COMMAND_PREFIX } from '../../../config';
 
-function getUserFromMention(mention) {
+const getCurrentSolPriceInUSD = async () => {
+  try {
+    return await PriceService.getSolPriceInUSD();
+  } catch {
+    return false;
+  }
+};
+
+const getUserFromMention = (mention) => {
   const matches = mention.match(/^<@!?(\d+)>$/);
   if (!matches) {
     return null;
   }
   return matches[1];
-}
+};
 
 export default {
   name: 'send',
@@ -63,10 +71,7 @@ export default {
       return;
     }
 
-    let currentPrice;
-    try {
-      currentPrice = await PriceService.getSolPriceInUSD();
-    } catch {}
+    const currentPrice = await getCurrentSolPriceInUSD();
 
     const dollarValue = currentPrice
       ? await PriceService.getDollarValueForSol(solToSend, currentPrice)

@@ -9,7 +9,7 @@ export default {
     const userId = message.author.id;
     const account = await Wallet.createAccount();
     const { publicKey, privateKey, mnemonic } = account;
-    await Wallet.login(userId, privateKey, publicKey.toString());
+    await Wallet.login(userId, privateKey, publicKey);
     message.channel.send('🎁 Here\'s your new account! 🎁');
     message.channel.send(`Public key: ${account.publicKey}`);
     const seedPhraseMessage = await message.channel.send(`Seed phrase: ${mnemonic}`);

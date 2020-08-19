@@ -11,15 +11,11 @@ export default {
       message.channel.send(`Currently selected cluster: ${await Wallet.getCluster(message.author.id)}`);
       return;
     }
-    if (Object.values(CLUSTERS).includes(args[1].toLowerCase())) {
-      try {
-        await Wallet.setCluster(message.author.id, args[1].toLowerCase());
-        message.channel.send(`Successfully switched to cluster: ${args[1].toLowerCase()}`);
-      } catch (e) {
-        message.channel.send(e.message);
-      }
-    } else {
-      message.channel.send(`⚠️ Invalid Cluster: ${args[1]} ⚠️`);
+    try {
+      await Wallet.setCluster(message.author.id, args[1].toLowerCase());
+      message.channel.send(`Successfully switched to cluster: ${args[1].toLowerCase()}`);
+    } catch (e) {
+      message.channel.send(e.message);
     }
   },
 };

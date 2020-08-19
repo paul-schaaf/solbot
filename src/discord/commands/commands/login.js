@@ -2,6 +2,14 @@ import Wallet from '../../../wallet';
 import PriceService from '../../../price/PriceService';
 import { COMMAND_PREFIX } from '../../../config';
 
+const getDollarValue = async (sol) => {
+  try {
+    return await PriceService.getDollarValueForSol(sol);
+  } catch {
+    return false;
+  }
+};
+
 export default {
   name: 'login',
   description: 'Logs you in for 30 minutes. Use "!logout" to logout earlier.',
@@ -15,23 +23,19 @@ export default {
       message.channel.send(e.message);
       return;
     }
-    const { publicKey, secretKey: privateKey } = account;
-    const publicKeyString = publicKey.toString();
-    const { cluster } = await Wallet.login(userId, privateKey, publicKeyString);
+    const { publicKey, privateKey } = account;
+    const { cluster } = await Wallet.login(userId, privateKey, publicKey);
 
     const sol = PriceService
       .convertLamportsToSol(
-        await Wallet.getBalance(publicKeyString, cluster),
+        await Wallet.getBalance(publicKey, cluster),
       );
 
-    let dollarValue;
-    try {
-      dollarValue = await PriceService.getDollarValueForSol(sol);
-    } catch (e) {}
+    const dollarValue = await getDollarValue(sol);
 
     message.channel.send('🥳 You\'re logged in for 30 minutes, use \'!logout\' to logout earlier! 🥳');
     message.channel.send(`ℹ️ You're currently on cluster: ${cluster}. Use '!cluster' to switch between clusters! ℹ️`);
     message.channel.send(`Your public key: ${publicKey}\nYour account balance: ${sol} Sol ${dollarValue ? `(~${dollarValue})` : ''}`);
-    message.channel.send('🚧 Please consider deleting your previous message now to keep your seed phrase secret 🚧');
+    message.channel.send('🚨 Please consider deleting your previous message now to keep your seed phrase secret 🚨');
   },
 };

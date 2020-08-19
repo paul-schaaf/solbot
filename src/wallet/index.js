@@ -8,7 +8,7 @@ const setCluster = (id, clusterName) => {
   if (Object.values(CLUSTERS).includes(clusterName.toLowerCase())) {
     return SessionStorageService.setCluster(id, clusterName, EXPIRY_TIME);
   }
-  throw new Error(`⚠️ Invalid cluster name ${clusterName} ⚠️`);
+  throw new Error(`⚠️ Invalid cluster name: ${clusterName} ⚠️`);
 };
 
 const login = async (id, privateKey, publicKey) => {
