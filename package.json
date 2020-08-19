@@ -7,7 +7,7 @@
     "lint": "eslint src --fix",
     "start": "nodemon --exec babel-node src/index.js",
     "migrate": "sequelize-cli db:migrate",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Paul Schaaf",
   "license": "ISC",
@@ -26,17 +26,19 @@
     "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.11.0",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.3.0",
     "eslint": "^7.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "husky": "^4.2.5",
+    "jest": "^26.4.0",
     "nodemon": "^2.0.4",
     "pg": "^8.3.0",
     "sequelize-cli": "^6.2.0"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint; npm run test"
     }
   }
 }
