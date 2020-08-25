@@ -1,7 +1,7 @@
 import * as web3 from '@solana/web3.js';
 
 const isValidPublicKey = (publicKeyString) => {
-  if(typeof publicKeyString !== 'string'){
+  if (typeof publicKeyString !== 'string') {
     return false;
   }
 
