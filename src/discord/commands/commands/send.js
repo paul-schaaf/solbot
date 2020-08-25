@@ -87,7 +87,7 @@ export default {
         message.channel.send(e.message);
       }
     } else {
-      message.channel.send(`💸 Successfully sent ${solToSend} Sol on cluster: ${cluster} 💸`);
+      message.channel.send(`💸 Successfully sent ${solToSend} SOL on cluster: ${cluster} 💸`);
     }
   },
 };
