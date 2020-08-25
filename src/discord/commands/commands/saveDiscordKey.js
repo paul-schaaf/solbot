@@ -6,7 +6,7 @@ export default {
   name: 'save-discordkey',
   description:
       'Use this command to connect your discordId to a public key.'
-      + ' Whenever someone sends you money using: \'!send <amount> @<yourUsername>\', this is the public key their sol will be sent to.',
+      + ' Whenever someone sends you money using: \'!send <amount> @<yourUsername>\', this is the public key their SOL will be sent to.',
   usage: [`${COMMAND_PREFIX}save-discordkey <publicKeyString>`],
   async execute(message, args) {
     if (args.length === 1) {

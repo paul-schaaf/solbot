@@ -29,6 +29,6 @@ export default {
     const sol = PriceService.convertLamportsToSol(balanceInLamports);
     const dollarValue = await getDollarValue(sol);
 
-    message.channel.send(`Your public key: ${publicKey}\nYour account balance: ${sol} Sol ${dollarValue ? `(~$${dollarValue}) ` : ''}on cluster: ${cluster}`);
+    message.channel.send(`Your public key: ${publicKey}\nYour account balance: ${sol} SOL ${dollarValue ? `(~$${dollarValue}) ` : ''}on cluster: ${cluster}`);
   },
 };

@@ -19,7 +19,7 @@
 - [Architecture](#architecture)
 
 ## Features
-* send sol to public keys or by tagging a discord user
+* send SOL to public keys or by tagging a discord user
 * switch between clusters
 * check your account balance
 * one day (maybe :) ): ledger support, monikers (e.g. send 1 coffee)

@@ -14,7 +14,7 @@ export default {
     embed
       .setColor('#0099ff')
       .setTitle('Solana Discord Tipping Bot')
-      .setDescription('Hi! I\'m the Solana Discord Tipping Bot.\nYou can use me to send and receive sol through discord!')
+      .setDescription('Hi! I\'m the Solana Discord Tipping Bot.\nYou can use me to send and receive SOL through discord!')
       .addFields(...commandInstructions);
 
     message.channel.send(embed);

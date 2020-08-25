@@ -21,7 +21,7 @@ const getUserFromMention = (mention) => {
 
 export default {
   name: 'send',
-  description: 'Lets you send sol to someone on the currently selected cluster. To specify the recipient,'
+  description: 'Lets you send SOL to someone on the currently selected cluster. To specify the recipient,'
       + 'you can use a public key or tag someone with @<username> someone. You must be logged in to use this command.'
       + ' When !sending in a public channel, no balance or tx info will be shown after the tx has completed.',
   usage: [`${COMMAND_PREFIX}send 5 GsbwXfJraMomNxBcjYLcG3mxkBUiyWXAB32fGbSMQRdW`, `${COMMAND_PREFIX}send 5 @<username>`],
@@ -78,11 +78,11 @@ export default {
       : null;
 
     if (message.channel.type === 'dm') {
-      message.channel.send(`💸 Successfully sent ${solToSend} Sol ${dollarValue ? `(~${dollarValue}) ` : ''}to ${toPublicKeyString} on cluster: ${cluster} 💸\nSignature: ${signature}`);
+      message.channel.send(`💸 Successfully sent ${solToSend} SOL ${dollarValue ? `(~${dollarValue}) ` : ''}to ${toPublicKeyString} on cluster: ${cluster} 💸\nSignature: ${signature}`);
       try {
         const balance = await Wallet.getBalance(keypair.publicKey, cluster);
         const sol = PriceService.convertLamportsToSol(balance);
-        message.channel.send(`Your new account balance: ${sol} Sol ${currentPrice ? `(~${await PriceService.getDollarValueForSol(sol, currentPrice)})` : ''}`);
+        message.channel.send(`Your new account balance: ${sol} SOL ${currentPrice ? `(~${await PriceService.getDollarValueForSol(sol, currentPrice)})` : ''}`);
       } catch (e) {
         message.channel.send(e.message);
       }
