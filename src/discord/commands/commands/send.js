@@ -34,8 +34,9 @@ export default {
     const solToSend = parseFloat(args[1]);
     let toPublicKeyString = args[2];
 
+    let recipientId;
     if (!Wallet.isValidPublicKey(args[2])) {
-      const recipientId = getUserFromMention(args[2]);
+      recipientId = getUserFromMention(args[2]);
       if (!recipientId) {
         message.channel.send('⚠️ Given recipient is neither a public key nor a user ⚠️');
         return;
@@ -77,17 +78,21 @@ export default {
       ? await PriceService.getDollarValueForSol(solToSend, currentPrice)
       : null;
 
+    const recipient = recipientId ? `<@${recipientId}>` : toPublicKeyString;
+
+    const txLink = `<https://explorer.solana.com/tx/${signature}?cluster=${cluster}>`;
+
     if (message.channel.type === 'dm') {
-      message.channel.send(`💸 Successfully sent ${solToSend} SOL ${dollarValue ? `(~${dollarValue}) ` : ''}to ${toPublicKeyString} on cluster: ${cluster} 💸\nSignature: ${signature}`);
+      message.channel.send(`💸 Successfully sent ${solToSend} SOL ${dollarValue ? `(~$${dollarValue}) ` : ''}to ${recipient} on cluster: ${cluster} 💸\n${txLink}`);
       try {
         const balance = await Wallet.getBalance(keypair.publicKey, cluster);
         const sol = PriceService.convertLamportsToSol(balance);
-        message.channel.send(`Your new account balance: ${sol} SOL ${currentPrice ? `(~${await PriceService.getDollarValueForSol(sol, currentPrice)})` : ''}`);
+        message.channel.send(`Your new account balance: ${sol} SOL ${currentPrice ? `(~$${await PriceService.getDollarValueForSol(sol, currentPrice)})` : ''}`);
       } catch (e) {
         message.channel.send(e.message);
       }
     } else {
-      message.channel.send(`💸 Successfully sent ${solToSend} SOL on cluster: ${cluster} 💸`);
+      message.channel.send(`💸 Successfully sent ${solToSend} SOL ${dollarValue ? `(~$${dollarValue}) ` : ''}to ${recipient} on cluster: ${cluster} 💸\n${txLink}`);
     }
   },
 };
