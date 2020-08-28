@@ -17,6 +17,7 @@
 ## Table of Contents
 - [Features](#features)
 - [Architecture](#architecture)
+- [Deployment](#deployment)
 
 ## Features
 * send SOL to public keys or by tagging a discord user
@@ -38,3 +39,31 @@ Regular wallet offering functions such as inspecting balance or sending currency
 the selected Solana cluster. Saves private key in memory while user is logged in.
 #### PriceAPI
 Provides the current USD value of SOL and some other price-related functions.
+
+## Deployment
+
+### Discord Setup
+
+1. Go to the discord developer portal and create a new application
+2. Create a new bot. You can also give it an avatar. You'll need the bot token for later!
+3. Go to `https://discord.com/oauth2/authorize?client_id=<YOUR_APPLICATION_CLIENT_ID>&scope=bot` to add the bot to your server.
+
+### Local Deployment
+
+1. Start a local postgresql for the PublicKeyStorage 
+
+    ```
+    docker run -d -p 5432:5432 -e POSTGRES_USER=tipping-bot -e POSTGRES_PASSWORD=tipping-bot-postgresql -e POSTGRES_DB=tipping-bot-postgresql --name tipping-bot-postgresql postgres:12.4-alpine
+    ```
+
+2. add a new `secret` folder inside `src`, add an `.env` file inside with the following content (DO NOT COMMIT THIS FILE):
+   ```
+   DISCORD_TOKEN=<YOUR_BOT_TOKEN>
+   ```
+   
+3. run `npm install`
+4. run `npm run migrate`
+5. run `npm start`
+
+### Cloud Deployment
+coming soon...
