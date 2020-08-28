@@ -36,3 +36,5 @@ tagging them in a message instead of having to write the public key.
 #### Wallet
 Regular wallet offering functions such as inspecting balance or sending currency. Forwards calls to
 the selected Solana cluster. Saves private key in memory while user is logged in.
+#### PriceAPI
+Provides the current USD value of SOL and some other price-related functions.

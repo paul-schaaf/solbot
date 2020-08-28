@@ -83,7 +83,7 @@ export default {
     const txLink = `<https://explorer.solana.com/tx/${signature}?cluster=${cluster}>`;
     const data = [];
     data.push(`💸 Successfully sent ${solToSend} SOL ${dollarValue ? `(~$${dollarValue}) ` : ''}to ${recipient} on cluster: ${cluster} 💸`);
-    data.push(`Click the link to see when your tx has been finalized (reached MAX confirmations)!`);
+    data.push('Click the link to see when your tx has been finalized (reached MAX confirmations)!');
     data.push(`${txLink}`);
     message.channel.send(data);
   },
