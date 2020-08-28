@@ -81,18 +81,10 @@ export default {
     const recipient = recipientId ? `<@${recipientId}>` : toPublicKeyString;
 
     const txLink = `<https://explorer.solana.com/tx/${signature}?cluster=${cluster}>`;
-
-    if (message.channel.type === 'dm') {
-      message.channel.send(`💸 Successfully sent ${solToSend} SOL ${dollarValue ? `(~$${dollarValue}) ` : ''}to ${recipient} on cluster: ${cluster} 💸\n${txLink}`);
-      try {
-        const balance = await Wallet.getBalance(keypair.publicKey, cluster);
-        const sol = PriceService.convertLamportsToSol(balance);
-        message.channel.send(`Your new account balance: ${sol} SOL ${currentPrice ? `(~$${await PriceService.getDollarValueForSol(sol, currentPrice)})` : ''}`);
-      } catch (e) {
-        message.channel.send(e.message);
-      }
-    } else {
-      message.channel.send(`💸 Successfully sent ${solToSend} SOL ${dollarValue ? `(~$${dollarValue}) ` : ''}to ${recipient} on cluster: ${cluster} 💸\n${txLink}`);
-    }
+    const data = [];
+    data.push(`💸 Successfully sent ${solToSend} SOL ${dollarValue ? `(~$${dollarValue}) ` : ''}to ${recipient} on cluster: ${cluster} 💸`);
+    data.push(`Click the link to see when your tx has been finalized (reached MAX confirmations)!`);
+    data.push(`${txLink}`);
+    message.channel.send(data);
   },
 };
