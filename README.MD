@@ -50,7 +50,7 @@ Provides the current USD value of SOL and some other price-related functions.
 
 ### Local Deployment
 
-1. Start a local postgresql for the PublicKeyStorage 
+1. Start a local postgresql for the Public Key Storage 
 
     ```
     docker run -d -p 5432:5432 -e POSTGRES_USER=tipping-bot -e POSTGRES_PASSWORD=tipping-bot-postgresql -e POSTGRES_DB=tipping-bot-postgresql --name tipping-bot-postgresql postgres:12.4-alpine
@@ -66,4 +66,19 @@ Provides the current USD value of SOL and some other price-related functions.
 5. run `npm start`
 
 ### Cloud Deployment
-coming soon...
+
+- Whatever deployment provider you choose, you will need
+    - a postgres db
+    - a node runtime
+- The following environment variables should be set
+    - NODE_ENV: "production"
+    - DISCORD_TOKEN: <YOUR_BOT_TOKEN>
+    - PROD_DB_USERNAME: <YOUR_DB_USERNAME,
+    - PROD_DB_PASSWORD: <YOUR_DB_PASSWORD>,
+    - PROD_DB_NAME: <YOUR_DB_NAME>,
+    - PROD_DB_HOST: <YOUR_DB_HOST>,
+    - PROD_DB_PORT: <YOUR_DB_PORT>,
+
+1. With the above steps completed, you can start with `npm install`
+2. Then run `npm run migrate`
+3. Then run `npm start`
