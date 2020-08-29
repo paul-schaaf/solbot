@@ -17,6 +17,7 @@
 ## Table of Contents
 - [Features](#features)
 - [Architecture](#architecture)
+- [Solana Specifics](#solana specifics)
 - [Deployment](#deployment)
 
 ## Features
@@ -39,6 +40,36 @@ Regular wallet offering functions such as inspecting balance or sending currency
 the selected Solana cluster. Saves private key in memory while user is logged in.
 #### PriceAPI
 Provides the current USD value of SOL and some other price-related functions.
+
+## Solana Specifics
+If you're interested in the specifics of using Solana,
+check out the `solana` package inside the `src` folder.
+
+#### Connection
+
+The main entrypoint to the cluster is the [Connection](https://solana-labs.github.io/solana-web3.js/class/src/connection.js~Connection.html) 
+on which methods such as `getBalance` or `sendTransaction` can be called. When creating a connection,
+you can specify a [Commitment](https://solana-labs.github.io/solana-web3.js/typedef/index.html#static-typedef-Commitment) which tells
+the connection which slot to query when making a request e.g. when calling getBalance on a connection with commitment === `max`, it will
+return the balance of the given account in the latest finalised slot.
+
+#### Convenience functions
+
+The solana js library also provides a range of convenience functions to make common workflows
+easier to code e.g. `web3.clusterApiUrl` to convert a cluster name  such as `mainnet-beta` to
+the url to connect to.
+
+#### Transferring funds
+
+Generally, all apps that want to interact with a Solana need to send transactions to it,
+that can include multiple instructions. These instructions are forwarded to [programs](https://docs.solana.com/apps#instructions)
+deployed on-chain (each transaction references a programId that specifies which program
+should process the instruction).
+
+All this holds true even for transferring funds and again the solana library provides
+helper functions for it. Specifically, we can use `web3.SystemProgram.transfer` to create
+a transaction that will be sent to the [System Program](https://github.com/solana-labs/solana/blob/master/runtime/src/system_instruction_processor.rs)
+which then adjusts account balances. The created transaction can then be sent using `web3.sendAndConfirmTransaction`.
 
 ## Deployment
 
