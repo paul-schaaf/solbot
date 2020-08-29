@@ -8,7 +8,7 @@ export default {
   usage: [`${COMMAND_PREFIX}help`],
   async execute(message) {
     const allCommands = CommandUtil.getAllCommands();
-    const commandInstructions = allCommands.map((c) => ({ name: COMMAND_PREFIX + c.name, value: `${c.description}\n\nUsage: ${c.usage.join(', ')}` }));
+    const commandInstructions = allCommands.map((c) => ({ name: COMMAND_PREFIX + c.name, value: `${c.description}\n\nExample usage: ${c.usage.join(', ')}` }));
 
     const embed = new Discord.MessageEmbed();
     embed

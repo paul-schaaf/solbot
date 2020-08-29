@@ -4,11 +4,15 @@ import Solana from '../solana';
 
 const EXPIRY_TIME = 1000 * 60 * 30; // 30 minutes;
 
-const setCluster = (id, clusterName) => {
-  if (Object.values(CLUSTERS).includes(clusterName.toLowerCase())) {
-    return SessionStorageService.setCluster(id, clusterName, EXPIRY_TIME);
+const assertValidClusterName = (clusterName) => {
+  if (!Object.values(CLUSTERS).includes(clusterName.toLowerCase())) {
+    throw new Error(`⚠️ Invalid cluster name: ${clusterName} ⚠️`);
   }
-  throw new Error(`⚠️ Invalid cluster name: ${clusterName} ⚠️`);
+};
+
+const setCluster = (id, clusterName) => {
+  assertValidClusterName(clusterName);
+  return SessionStorageService.setCluster(id, clusterName, EXPIRY_TIME);
 };
 
 const login = async (id, privateKey, publicKey) => {
@@ -22,6 +26,7 @@ const login = async (id, privateKey, publicKey) => {
 const isLoggedIn = async (id) => (!!(await SessionStorageService.getPrivateKey(id)));
 
 export default {
+  assertValidClusterName,
   getKeyPair: SessionStorageService.getKeyPair,
   getCluster: SessionStorageService.getCluster,
   setCluster,

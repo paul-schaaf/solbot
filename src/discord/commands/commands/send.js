@@ -23,20 +23,37 @@ export default {
   name: 'send',
   description: 'Lets you send SOL to someone on the currently selected cluster. To specify the recipient,'
       + 'you can use a public key or tag someone with @<username> someone. You must be logged in to use this command.'
-      + ' When !sending in a public channel, no balance or tx info will be shown after the tx has completed.',
-  usage: [`${COMMAND_PREFIX}send 5 GsbwXfJraMomNxBcjYLcG3mxkBUiyWXAB32fGbSMQRdW`, `${COMMAND_PREFIX}send 5 @<username>`],
+      + ' You can add the cluster name after the recipient to send the tx on a specific cluster.',
+  usage: [
+    `${COMMAND_PREFIX}send <amount> <publicKeyString>`,
+    `${COMMAND_PREFIX}send <amount> @<username>`,
+    `${COMMAND_PREFIX}send <amount> @<username> <clusterName>`,
+  ],
   async execute(message, args) {
-    if (args.length !== 3) {
+    if (args.length !== 3 && args.length !== 4) {
       message.channel.send('⚠️ Wrong number of arguments ⚠️');
       return;
+    }
+
+    let clusterArg;
+    if (args.length >= 4) {
+      try {
+        Wallet.assertValidClusterName(args[3]);
+      } catch (e) {
+        message.channel.send(e.message);
+        return;
+      }
+
+      // eslint-disable-next-line prefer-destructuring
+      clusterArg = args[3];
     }
 
     const solToSend = parseFloat(args[1]);
     let toPublicKeyString = args[2];
 
     let recipientId;
-    if (!Wallet.isValidPublicKey(args[2])) {
-      recipientId = getUserFromMention(args[2]);
+    if (!Wallet.isValidPublicKey(toPublicKeyString)) {
+      recipientId = getUserFromMention(toPublicKeyString);
       if (!recipientId) {
         message.channel.send('⚠️ Given recipient is neither a public key nor a user ⚠️');
         return;
@@ -59,7 +76,7 @@ export default {
     message.channel.send('Sending...');
 
     const userId = message.author.id;
-    const cluster = await Wallet.getCluster(userId);
+    const cluster = clusterArg || await Wallet.getCluster(userId);
     const keypair = await Wallet.getKeyPair(userId);
     const { privateKey } = keypair;
 
