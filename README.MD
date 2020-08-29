@@ -17,7 +17,7 @@
 ## Table of Contents
 - [Features](#features)
 - [Architecture](#architecture)
-- [Solana Specifics](#solana specifics)
+- [Solana Specifics](#solana-specifics)
 - [Deployment](#deployment)
 
 ## Features
