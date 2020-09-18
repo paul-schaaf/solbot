@@ -26,6 +26,11 @@
 * check your account balance
 * one day (maybe :) ): ledger support, monikers (e.g. send 1 coffee)
 
+### Commands
+You can interact with the bot using commands such as `!help`.
+In a public channel, you can only use the `!send` command.
+You can use **all** commands in a private DM channel with the bot.
+
 ## Architecture
 ![High Level Architecture](docs/images/high_level_architecture.png)
 

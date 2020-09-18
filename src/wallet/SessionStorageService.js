@@ -4,11 +4,11 @@ const privateKeys = new Keyv();
 const publicKeys = new Keyv();
 const clusters = new Keyv();
 
-const setKeyPair = async (id, privateKey, publicKey, expiryTime) => {
+const setKeyPair = async (id, privateKey, publicKey) => {
   await Promise
     .all([
-      privateKeys.set(id, privateKey, expiryTime),
-      publicKeys.set(id, publicKey, expiryTime),
+      privateKeys.set(id, privateKey),
+      publicKeys.set(id, publicKey),
     ]);
   return { privateKey, publicKey };
 };
@@ -23,7 +23,7 @@ const getKeyPair = async (id) => {
   };
 };
 
-const setCluster = (id, clusterName, expiryTime) => clusters.set(id, clusterName, expiryTime);
+const setCluster = (id, clusterName) => clusters.set(id, clusterName);
 
 const getCluster = (id) => clusters.get(id);
 

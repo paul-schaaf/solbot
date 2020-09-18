@@ -13,10 +13,12 @@ export default {
     const embed = new Discord.MessageEmbed();
     embed
       .setColor('#0099ff')
-      .setTitle('Solana Discord Tipping Bot')
-      .setDescription('Hi! I\'m the Solana Discord Tipping Bot.\nYou can use me to send and receive SOL through discord!\n🚨Warning🚨 This wallet'
+      .setTitle('Solbot')
+      .setDescription('Hi! I\'m Solbot. 😁\nYou can use me to send and receive SOL through discord!\n🚨 Warning 🚨 This wallet'
           + ' is not built to be the most secure wallet ever and provides no guarantees for 100% bug-free code and takes no responsibility for the loss'
-          + ' of funds. Please use the bot to create a new wallet and only transfer small amounts to it.')
+          + ' of funds. Please use the bot to create a new wallet to be used in discord and only transfer small amounts to it.\n'
+          + 'ℹ️ To keep your wallet info safe, only the "!send" command is available in a public discord channel. DM the bot for all other commands. ℹ️️'
+          + '\nIf you\'re interested in the source code, go here: https://github.com/paul-schaaf/solbot')
       .addFields(...commandInstructions);
 
     message.channel.send(embed);
